@@ -1,0 +1,40 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>GameRoom</h1>
+    <h2>Connexion</h2>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="votre@email.com"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+      </div>
+
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <p class="redirect">
+      Pas encore de compte ? <a routerLink="/register">S'inscrire</a>
+    </p>
+  </div>
+</div>

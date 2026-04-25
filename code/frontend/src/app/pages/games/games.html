@@ -1,0 +1,96 @@
+<div class="games-container">
+  <nav class="navbar">
+    <h1>GameRoom</h1>
+    <div class="nav-actions">
+      <a routerLink="/rooms">Salles</a>
+      <button (click)="logout()">Déconnexion</button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="header">
+      <h2>Jeux disponibles</h2>
+      <button (click)="showForm = !showForm">+ Nouveau jeu</button>
+    </div>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <div class="form-card" *ngIf="showForm">
+      <h3>Créer un jeu</h3>
+      <form (ngSubmit)="createGame()">
+        <div class="form-group">
+          <label>Titre</label>
+          <input type="text" [(ngModel)]="newGame.title" name="title" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" [(ngModel)]="newGame.description" name="description" />
+        </div>
+        <div class="form-group">
+          <label>Catégorie</label>
+          <select [(ngModel)]="newGame.category" name="category">
+            <option value="action">Action</option>
+            <option value="stratégie">Stratégie</option>
+            <option value="puzzle">Puzzle</option>
+            <option value="sport">Sport</option>
+            <option value="rpg">RPG</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Joueurs max</label>
+          <input type="number" [(ngModel)]="newGame.maximumPlayers" name="maximumPlayers" min="2" max="16" />
+        </div>
+        <button type="submit">Créer</button>
+      </form>
+    </div>
+
+    <div class="edit-card" *ngIf="editingGame">
+      <h3>Modifier le jeu</h3>
+      <form (ngSubmit)="updateGame()">
+        <div class="form-group">
+          <label>Titre</label>
+          <input type="text" [(ngModel)]="editingGame.title" name="editTitle" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" [(ngModel)]="editingGame.description" name="editDescription" />
+        </div>
+        <div class="form-group">
+          <label>Catégorie</label>
+          <select [(ngModel)]="editingGame.category" name="editCategory">
+            <option value="action">Action</option>
+            <option value="stratégie">Stratégie</option>
+            <option value="puzzle">Puzzle</option>
+            <option value="sport">Sport</option>
+            <option value="rpg">RPG</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Joueurs max</label>
+          <input type="number" [(ngModel)]="editingGame.maximumPlayers" name="editMaxPlayers" min="2" max="16" />
+        </div>
+        <div class="form-actions">
+          <button type="submit">Sauvegarder</button>
+          <button type="button" (click)="editingGame = null">Annuler</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="games-grid">
+      <div class="game-card" *ngFor="let game of games">
+        <div class="game-info">
+          <h3>{{ game.title }}</h3>
+          <p>{{ game.description }}</p>
+          <span class="badge">{{ game.category }}</span>
+          <span class="players">{{ game.maximumPlayers }} joueurs max</span>
+        </div>
+        <div class="game-actions">
+          <button (click)="editGame(game)">Modifier</button>
+          <button class="danger" (click)="deleteGame(game._id)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="rooms-container">
+  <nav class="navbar">
+    <h1>GameRoom</h1>
+    <div class="nav-actions">
+      <a routerLink="/games">Jeux</a>
+      <button (click)="logout()">Déconnexion</button>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="notifications" *ngIf="notifications.length > 0">
+      <div class="notification" *ngFor="let notif of notifications">
+        🔔 {{ notif }}
+      </div>
+    </div>
+
+    <div class="header">
+      <h2>Salles de jeu</h2>
+      <button (click)="showForm = !showForm">+ Nouvelle salle</button>
+    </div>
+
+    <div class="error" *ngIf="error">{{ error }}</div>
+
+    <div class="form-card" *ngIf="showForm">
+      <h3>Créer une salle</h3>
+      <form (ngSubmit)="createRoom()">
+        <div class="form-group">
+          <label>Nom de la salle</label>
+          <input type="text" [(ngModel)]="newRoom.name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label>Jeu</label>
+          <select [(ngModel)]="newRoom.game" name="game" required>
+            <option value="">Sélectionner un jeu</option>
+            <option *ngFor="let game of games" [value]="game._id">{{ game.title }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Joueurs max</label>
+          <input type="number" [(ngModel)]="newRoom.maxPlayers" name="maxPlayers" min="2" max="16" />
+        </div>
+        <button type="submit">Créer</button>
+      </form>
+    </div>
+
+    <div class="edit-card" *ngIf="editingRoom">
+      <h3>Modifier la salle</h3>
+      <form (ngSubmit)="updateRoom()">
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" [(ngModel)]="editingRoom.name" name="editName" required />
+        </div>
+        <div class="form-group">
+          <label>Joueurs max</label>
+          <input type="number" [(ngModel)]="editingRoom.maxPlayers" name="editMaxPlayers" min="2" max="16" />
+        </div>
+        <div class="form-actions">
+          <button type="submit">Sauvegarder</button>
+          <button type="button" (click)="editingRoom = null">Annuler</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="rooms-grid">
+      <div class="room-card" *ngFor="let room of rooms">
+        <div class="room-info">
+          <h3>{{ room.name }}</h3>
+          <p class="game-name">🎮 {{ $any(room.game)?.title || room.game }}</p>
+          <span class="status" [class]="room.status">{{ room.status }}</span>
+          <p class="players-count">{{ room.players.length }} / {{ room.maxPlayers }} joueurs</p>
+        </div>
+        <div class="room-actions">
+          <button (click)="joinRoom(room._id)" [disabled]="room.status !== 'waiting'">Rejoindre</button>
+          <button *ngIf="isHost(room)" (click)="startRoom(room._id)" [disabled]="room.status !== 'waiting'">Démarrer</button>
+          <button *ngIf="isHost(room)" (click)="editRoom(room)">Modifier</button>
+          <button *ngIf="isHost(room)" class="danger" (click)="deleteRoom(room._id)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

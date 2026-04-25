@@ -1,0 +1,13 @@
+{
+  "name": "gameroom",
+  "version": "1.0.0",
+  "description": "GameRoom - Full Stack App",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && ng serve"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

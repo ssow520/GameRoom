@@ -1,0 +1,218 @@
+.games-container {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  h1 {
+    font-size: 22px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    a {
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+
+      &:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-size: 14px;
+
+      &:hover {
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+    }
+  }
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+
+  h2 {
+    font-size: 24px;
+    color: var(--text);
+  }
+
+  button {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: #0d0d0d;
+    font-weight: 600;
+    padding: 12px 24px;
+
+    &:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      box-shadow: var(--shadow-gold);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.form-card, .edit-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 32px;
+
+  h3 {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  button[type="submit"] {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: #0d0d0d;
+    font-weight: 600;
+    padding: 12px 24px;
+    margin-right: 12px;
+
+    &:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      box-shadow: var(--shadow-gold);
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+
+  button:last-child {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+
+    &:hover {
+      border-color: var(--border-light);
+      color: var(--text);
+    }
+  }
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.game-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &:hover {
+    border-color: var(--border-light);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .game-info {
+    flex: 1;
+
+    h3 {
+      font-size: 18px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--gold-glow);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--gold);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: capitalize;
+      margin-right: 8px;
+    }
+
+    .players {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  }
+
+  .game-actions {
+    display: flex;
+    gap: 8px;
+
+    button {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 13px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+
+      &:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+
+      &.danger {
+        &:hover {
+          border-color: var(--danger);
+          color: var(--danger);
+        }
+      }
+    }
+  }
+}
