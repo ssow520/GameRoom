@@ -1,14 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { GameService } from '../../services/game';
 import { AuthService } from '../../services/auth';
 import { Game } from '../../models/game.model';
+import { Navbar } from '../../components/navbar/navbar';
 
 @Component({
   selector: 'app-games',
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, Navbar],
   templateUrl: './games.html',
   styleUrl: './games.scss',
 })

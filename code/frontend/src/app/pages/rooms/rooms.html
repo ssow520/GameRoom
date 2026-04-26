@@ -1,11 +1,5 @@
 <div class="rooms-container">
-  <nav class="navbar">
-    <h1>GameRoom</h1>
-    <div class="nav-actions">
-      <a routerLink="/games">Jeux</a>
-      <button (click)="logout()">Déconnexion</button>
-    </div>
-  </nav>
+  <app-navbar />
 
   <div class="content">
     <div class="notifications" *ngIf="notifications.length > 0">
@@ -70,6 +64,7 @@
           <p class="players-count">{{ room.players.length }} / {{ room.maxPlayers }} joueurs</p>
         </div>
         <div class="room-actions">
+          <button (click)="router.navigate(['/rooms', room._id])">Voir</button>
           <button (click)="joinRoom(room._id)" [disabled]="room.status !== 'waiting'">Rejoindre</button>
           <button *ngIf="isHost(room)" (click)="startRoom(room._id)" [disabled]="room.status !== 'waiting'">Démarrer</button>
           <button *ngIf="isHost(room)" (click)="editRoom(room)">Modifier</button>

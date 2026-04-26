@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <a routerLink="/rooms" class="logo">GameRoom</a>
+
+  <div class="nav-links">
+    <a routerLink="/rooms" routerLinkActive="active">Salles</a>
+    <a routerLink="/games" routerLinkActive="active">Jeux</a>
+  </div>
+
+  <div class="nav-user">
+    <div class="user-info" (click)="menuOpen = !menuOpen">
+      <div class="avatar">
+        <img *ngIf="currentUser?.avatar" [src]="currentUser?.avatar" alt="avatar" />
+        <span *ngIf="!currentUser?.avatar">{{ currentUser?.username?.charAt(0)?.toUpperCase() }}</span>
+      </div>
+      <span class="username">{{ currentUser?.username }}</span>
+      <span class="chevron" [class.open]="menuOpen">▾</span>
+    </div>
+
+    <div class="dropdown" *ngIf="menuOpen">
+      <button (click)="logout()">Déconnexion</button>
+    </div>
+  </div>
+</nav>

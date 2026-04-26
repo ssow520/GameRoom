@@ -1,0 +1,64 @@
+<div class="room-detail-container">
+  <app-navbar />
+
+  <div class="content" *ngIf="room">
+    <div class="room-header">
+      <button class="back-btn" (click)="goBack()">← Retour</button>
+      <div class="room-title">
+        <h2>{{ room.name }}</h2>
+        <span class="status" [class]="room.status">{{ room.status }}</span>
+      </div>
+      <button *ngIf="isHost() && room.status === 'waiting'" class="start-btn" (click)="startRoom()">
+        🎮 Démarrer la partie
+      </button>
+    </div>
+
+    <div class="room-body">
+      <div class="players-panel">
+        <h3>Joueurs ({{ $any(room.players).length }} / {{ room.maxPlayers }})</h3>
+        <div class="players-list">
+          <div class="player-item" *ngFor="let player of room.players">
+            <div class="player-avatar">
+              {{ $any(player)?.username?.charAt(0)?.toUpperCase() }}
+            </div>
+            <span class="player-name">{{ $any(player)?.username }}</span>
+            <span class="host-badge" *ngIf="$any(player)?._id === $any(room.host)?._id">Host</span>
+          </div>
+        </div>
+
+        <div class="game-info" *ngIf="room.game">
+          <h3>Jeu</h3>
+          <div class="game-card">
+            <p class="game-title">{{ $any(room.game)?.title }}</p>
+            <p class="game-category">{{ $any(room.game)?.category }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-panel">
+        <h3>Chat en temps réel</h3>
+        <div class="messages">
+          <div class="empty-chat" *ngIf="messages.length === 0">
+            <p>Pas encore de messages. Soyez le premier !</p>
+          </div>
+          <div class="message" *ngFor="let msg of messages">
+            <span class="msg-username">{{ msg.username }}</span>
+            <span class="msg-text">{{ msg.message }}</span>
+            <span class="msg-time">{{ msg.timestamp | date:'HH:mm' }}</span>
+          </div>
+        </div>
+        <div class="chat-input">
+          <input
+            type="text"
+            [(ngModel)]="newMessage"
+            placeholder="Écrire un message..."
+            (keyup.enter)="sendMessage()"
+          />
+          <button (click)="sendMessage()">Envoyer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="error" *ngIf="error">{{ error }}</div>
+</div>

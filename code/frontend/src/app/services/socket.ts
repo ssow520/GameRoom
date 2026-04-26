@@ -23,6 +23,10 @@ export class SocketService {
     this.socket.emit('room:start', { roomId });
   }
 
+  sendMessage(roomId: string, username: string, message: string): void {
+    this.socket.emit('chat:message', { roomId, username, message });
+  }
+
   onRoomJoined(): Observable<any> {
     return new Observable(observer => {
       this.socket.on('room:joined', (data) => {
@@ -34,6 +38,14 @@ export class SocketService {
   onRoomStarted(): Observable<any> {
     return new Observable(observer => {
       this.socket.on('room:started', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  onChatMessage(): Observable<any> {
+    return new Observable(observer => {
+      this.socket.on('chat:message', (data) => {
         observer.next(data);
       });
     });
