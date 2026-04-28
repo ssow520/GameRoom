@@ -17,7 +17,7 @@
       <div class="players-panel">
         <h3>Joueurs ({{ $any(room.players).length }} / {{ room.maxPlayers }})</h3>
         <div class="players-list">
-          <div class="player-item" *ngFor="let player of room.players">
+          <div class="player-item" *ngFor="let player of $any(room.players)">
             <div class="player-avatar">
               {{ $any(player)?.username?.charAt(0)?.toUpperCase() }}
             </div>

@@ -42,7 +42,7 @@ export class Rooms implements OnInit, OnDestroy {
     private gameService: GameService,
     private authService: AuthService,
     private socketService: SocketService,
-    private router: Router,
+    public router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
