@@ -1,0 +1,71 @@
+name: CI/CD GameRoom
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install backend dependencies
+        working-directory: code/backend
+        run: npm install
+
+      - name: Check backend starts
+        working-directory: code/backend
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_EXPIRES_IN: 7d
+          CLIENT_URL: https://gameroom-frontend.onrender.com
+          PORT: 5001
+        run: node -e "require('./server.js')" &
+
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        working-directory: code/frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: code/frontend
+        run: npx ng build --configuration=production
+
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Deploy Backend
+        run: |
+          curl -X POST ${{ secrets.RENDER_BACKEND_DEPLOY_URL }}
+
+      - name: Deploy Frontend
+        run: |
+          curl -X POST ${{ secrets.RENDER_FRONTEND_DEPLOY_URL }}
