@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
   private socket!: Socket;
-  private serverUrl = 'http://localhost:5001';
+  private serverUrl = environment.socketUrl;
 
   connect(): void {
     if (!this.socket || !this.socket.connected) {
